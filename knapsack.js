@@ -48,7 +48,11 @@ items.sort((a, b) => {
 // console.log();
 
 
-const knapsack = [];
+const knapsack = {
+  selected: [],
+  space: 0,
+  value: 0
+};
 const leftOvers = []; // used to hold items not chosen
 let availSpace = capacity;
 
@@ -57,9 +61,11 @@ for (let i = 0; i < items.length; i++) {
     if ( availSpace - items[i].size >= 0 ) {
       // let tmp1 = availSpace;
       // let tmp2 = items[i].size;
-      knapsack.push(items[i]);
+      knapsack.selected.push(items[i].index);
+      knapsack.space += items[i].size;
+      knapsack.value += items[i].value;
       availSpace -= items[i].size;
-      // console.log(`Before: ${tmp1}, ${tmp2}    After: ${availSpace}, ${items[i].size}`);
+      // console.log(`Before: ${tmp1}, ${tmp2}    After: ${knapsack.space}, ${items[i].size}`);
     } else {
       leftOvers.push(items[i]);
     }
@@ -76,7 +82,7 @@ let i = 0;
 let changes = false;
 do {
   let item = leftOvers[i];
-  if ( availSpace > 0) {
+  if ( knapsack.space > 0) {
     
   }
 
@@ -86,15 +92,15 @@ do {
 // console.log();
 // console.log(knapsack);
 
-let selected = "", totalSize = 0, totalValue = 0;
-for (let i = 0; i < knapsack.length; i++) {
-  selected += knapsack[i].index + " ";
-  totalSize += knapsack[i].size;
-  totalValue += knapsack[i].value;
-}
+// let selected = "", space = 0, value = 0;
+// for (let i = 0; i < knapsack.length; i++) {
+//   selected += knapsack[i].index + " ";
+//   space += knapsack[i].size;
+//   value += knapsack[i].value;
+// }
 
 console.log();
-console.log(`Total value:     ${totalValue}` );
-console.log(`Total size:      ${totalSize}` );
-console.log(`Items to select: ${selected}` );
+console.log(`Total value:     ${knapsack.value}` );
+console.log(`Total size:      ${knapsack.space}` );
+console.log(`Items selected: ${knapsack.selected}` );
 console.log();
